@@ -32,7 +32,7 @@ def objective(trial):
 def train_model():
     """Train and save a RandomForestRegressor model, with hyperparameter tuning"""
     study = optuna.create_study(direction="minimize")
-    study.optimize(objective, n_trials=50)
+    study.optimize(objective, n_trials=5)
 
     best_params = study.best_params
     print("Best Parameters:", best_params)
