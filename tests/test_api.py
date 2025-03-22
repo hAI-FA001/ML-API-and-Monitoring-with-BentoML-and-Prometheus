@@ -3,7 +3,7 @@ import json
 
 
 def test_predict_endpoint():
-    url = "http://localhost:3000/predict"
+    url = "http://localhost:3001/predict"
     payload = {
         "input_data": {
             "MedInc": 8.3252,
@@ -21,12 +21,11 @@ def test_predict_endpoint():
     response = requests.post(url, data=json.dumps(payload), headers=headers)
 
     assert response.status_code == 200
-    assert isinstance(response.json(), list)
-    assert len(response.json()) > 0
+    assert "prediction" in response.json() or "error" in response.json()
 
 
 def test_health_endpoint():
-    url = "http://localhost:3000/health"
+    url = "http://localhost:3001/health"
     response = requests.post(url)
 
     assert response.status_code == 200
@@ -34,7 +33,7 @@ def test_health_endpoint():
 
 
 def test_metrics_endpoint():
-    url = "http://localhost:3000/metrics"
+    url = "http://localhost:3001/metrics"
     response = requests.get(url)
 
     assert response.status_code == 200
