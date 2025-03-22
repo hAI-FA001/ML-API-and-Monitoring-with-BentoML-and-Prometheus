@@ -43,5 +43,6 @@ california-housing-api/
 ├── pyproject.toml
 ├── poetry.lock
 ├── README.md
+├── Dockerfile
 └── .gitignore
 </pre>
