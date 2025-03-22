@@ -2,3 +2,9 @@
 .env
 config.yaml
 __pycache__
+
+*.pyc
+*.log
+
+data/
+models/
