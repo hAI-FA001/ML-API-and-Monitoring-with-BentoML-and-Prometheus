@@ -25,3 +25,7 @@ class HousingPredictor:
         input_array = np.array(list(input_data.dict().values())).reshape(1, -1)
         prediction = model.predict(input_array)
         return prediction
+
+    @bentoml.api(route="/health")
+    def health(self) -> str:
+        return "OK"
