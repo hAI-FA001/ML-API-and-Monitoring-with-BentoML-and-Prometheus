@@ -18,9 +18,19 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+
       - name: Install Poetry
         run: pip install poetry
       - name: Install dependencies
         run: poetry install
+
+      - name: Create ML Model
+        run: poetry run python ./src/california_housing_api/model_training.py
+
+      - name: Build Docker Image
+        run: docker build -t test-image .
+      - name: Run Docker Container
+        run: docker run -p 3000:3000 test-image
+
       - name: Run tests
         run: poetry run pytest
