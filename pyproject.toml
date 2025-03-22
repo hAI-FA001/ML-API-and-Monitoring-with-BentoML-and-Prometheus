@@ -5,8 +5,22 @@ description = "A REST API for predicting California housing prices using Machine
 authors = [{ name = "HAI" }]
 readme = "README.md"
 requires-python = ">=3.12,<4"
-dependencies = ["pandas (>=2.2.3,<3.0.0)", "scikit-learn (>=1.6.1,<2.0.0)", "joblib (>=1.4.2,<2.0.0)", "bentoml (>=1.4.5,<2.0.0)", "fastapi (>=0.115.11,<0.116.0)", "uvicorn (>=0.34.0,<0.35.0)", "python-dotenv (>=1.0.1,<2.0.0)"]
+dependencies = [
+    "pandas (>=2.2.3,<3.0.0)",
+    "scikit-learn (>=1.6.1,<2.0.0)",
+    "joblib (>=1.4.2,<2.0.0)",
+    "bentoml (>=1.4.5,<2.0.0)",
+    "fastapi (>=0.115.11,<0.116.0)",
+    "uvicorn (>=0.34.0,<0.35.0)",
+    "python-dotenv (>=1.0.1,<2.0.0)",
+    "requests (>=2.32.3,<3.0.0)",
+]
 
+[tool.poetry]
+packages = [
+    { include = "california_housing_api", from = "src" },
+    { include = "*", from = "src" },
+]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
