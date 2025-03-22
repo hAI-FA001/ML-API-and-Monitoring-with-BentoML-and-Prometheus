@@ -21,12 +21,13 @@ def test_predict_endpoint():
     response = requests.post(url, data=json.dumps(payload), headers=headers)
 
     assert response.status_code == 200
-    assert "prediction" in response.json()
+    assert isinstance(response.json(), list)
+    assert len(response.json()) > 0
 
 
 def test_health_endpoint():
     url = "http://localhost:3000/health"
-    response = requests.get(url)
+    response = requests.post(url)
 
     assert response.status_code == 200
     assert response.text == "OK"
