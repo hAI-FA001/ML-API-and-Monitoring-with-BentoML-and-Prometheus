@@ -38,14 +38,18 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - id: string
+      - id: string_repo
         uses: ASzc/change-string-case-action@v6
         with:
           string: ${{ github.event.repository.name }}
+      - id: string_owner
+        uses: ASzc/change-string-case-action@v6
+        with:
+          string: ${{ github.repository_owner }}
 
       - name: Build and push Docker Image
         uses: docker/build-push-action@v3
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/${{ steps.string.outputs.lowercase }}:latest
+          tags: ghcr.io/${{ steps.string_owner.outputs.lowercase }}/${{ steps.string_repo.outputs.lowercase }}:latest
