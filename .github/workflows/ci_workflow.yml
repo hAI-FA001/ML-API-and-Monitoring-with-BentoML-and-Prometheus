@@ -24,6 +24,8 @@ jobs:
       - name: Install dependencies
         run: poetry install
 
+      - name: Create models directory
+        run: mkdir -p models
       - name: Create ML Model
         run: poetry run python ./src/california_housing_api/model_training.py
 
