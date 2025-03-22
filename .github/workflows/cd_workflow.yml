@@ -42,4 +42,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/bentoml-housing-api:latest
+          tags: ghcr.io/${{ github.repository }}/${{ github.event.repository.name }}:latest
