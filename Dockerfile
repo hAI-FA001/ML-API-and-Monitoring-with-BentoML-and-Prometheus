@@ -8,6 +8,7 @@ COPY src ./src
 COPY models ./models
 
 RUN pip install poetry && poetry install && poetry env info --path > /tmp/poetry_path.txt && BENTO_PATH=$(cat /tmp/poetry_path.txt)/bin/bentoml && echo "Bento Path: $BENTO_PATH"
+RUN poetry run python -m california_housing_api.model_training
 
 EXPOSE 3000
 
