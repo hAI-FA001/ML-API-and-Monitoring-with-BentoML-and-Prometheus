@@ -1,5 +1,13 @@
 import requests
 import json
+import os
+import pytest
+
+
+@pytest.fixture(scope="session", autouse=True)
+def setup_env():
+    with open("api_keys.txt", "r") as f:
+        os.environ["API_KEY"] = f.readline().strip()
 
 
 def test_predict_endpoint():
@@ -15,6 +23,7 @@ def test_predict_endpoint():
             "Latitude": 37.88,
             "Longitude": -122.23,
         },
+        "api_key": os.environ["API_KEY"],
     }
 
     headers = {"Content-Type": "application/json"}
@@ -26,7 +35,11 @@ def test_predict_endpoint():
 
 def test_health_endpoint():
     url = "http://localhost:3001/health"
-    response = requests.post(url)
+    response = requests.post(
+        url,
+        data=json.dumps({"api_key": os.environ["API_KEY"]}),
+        headers={"Content-Type": "application/json"},
+    )
 
     assert response.status_code == 200
     assert response.text == "OK"
@@ -34,6 +47,10 @@ def test_health_endpoint():
 
 def test_metrics_endpoint():
     url = "http://localhost:3001/metrics"
-    response = requests.get(url)
+    response = requests.post(
+        url,
+        data=json.dumps({"api_key": os.environ["API_KEY"]}),
+        headers={"Content-Type": "application/json"},
+    )
 
     assert response.status_code == 200
