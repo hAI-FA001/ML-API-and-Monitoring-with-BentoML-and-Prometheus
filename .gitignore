@@ -2,9 +2,11 @@
 .env
 config.yaml
 __pycache__
+**/*cache*
 
 *.pyc
 *.log
 
 data/
 models/
+**/api_keys.txt

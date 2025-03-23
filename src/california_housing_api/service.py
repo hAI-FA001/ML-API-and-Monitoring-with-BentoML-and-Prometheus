@@ -6,6 +6,14 @@ from pydantic import BaseModel
 from prometheus_client import Counter, generate_latest, Histogram
 import time
 
+from bentoml.exceptions import InvalidArgument
+from california_housing_api.api_config import API_KEYS
+
+
+def authenticate(hashed):
+    if hashed not in API_KEYS:
+        raise InvalidArgument(error_code=401, message="Unauthorized")
+
 
 class HousingFeatures(BaseModel):
     MedInc: float
@@ -29,7 +37,9 @@ ERROR_COUNT = Counter("error_count", "Total number of Errors", ["endpoint"])
 @bentoml.service(name="housing_predictor", runners=[])
 class HousingPredictor:
     @bentoml.api
-    def predict(self, input_data: HousingFeatures) -> np.ndarray:
+    def predict(self, input_data: HousingFeatures, api_key: str) -> np.ndarray:
+        authenticate(api_key)
+
         start = time.time()
         REQUEST_COUNT.labels(endpoint="predict").inc()
 
@@ -45,11 +55,15 @@ class HousingPredictor:
             REQUEST_LATENCY.observe(time.time() - start)
 
     @bentoml.api(route="/health")
-    def health(self) -> str:
+    def health(self, api_key: str) -> str:
+        authenticate(api_key)
+
         REQUEST_COUNT.labels(endpoint="health").inc()
         return "OK"
 
     @bentoml.api(route="/metrics")
-    def metrics(self) -> str:
+    def metrics(self, api_key: str) -> str:
+        authenticate(api_key)
+
         REQUEST_COUNT.labels(endpoint="metrics").inc()
         return generate_latest().decode()
