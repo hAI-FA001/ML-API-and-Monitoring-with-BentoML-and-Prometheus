@@ -11,4 +11,4 @@ RUN pip install poetry && poetry install && poetry env info --path > /tmp/poetry
 
 EXPOSE 3000
 
-CMD ["/bin/sh", "-c", "$(cat /tmp/poetry_path.txt)/bin/bentoml serve src/california_housing_api/service.py:HousingPredictor --host 0.0.0.0 --port 3000"]
+CMD ["/bin/sh", "-c", "$(cat /tmp/poetry_path.txt)/bin/bentoml serve ./src/california_housing_api/service.py:HousingPredictor --host 0.0.0.0 --port 3000"]
