@@ -29,4 +29,3 @@ load_api_keys()
 if not API_KEYS:
     generate_api_key()
     save_api_keys()
-    print(API_KEYS)

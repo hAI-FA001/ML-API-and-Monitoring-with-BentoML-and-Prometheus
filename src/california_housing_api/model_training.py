@@ -2,6 +2,7 @@ import joblib
 import optuna
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, r2_score
+import bentoml
 
 from california_housing_api.data_loading import load_and_prepare_data
 
@@ -49,6 +50,7 @@ def train_model():
     print(f"R-squared: {r2}")
 
     joblib.dump(best_model, "models/housing_model.joblib")
+    bentoml.sklearn.save_model("housing_model", best_model)
 
 
 if __name__ == "__main__":

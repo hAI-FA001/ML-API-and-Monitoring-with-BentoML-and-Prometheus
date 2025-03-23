@@ -1,5 +1,4 @@
 import bentoml
-import joblib
 import numpy as np
 from pydantic import BaseModel
 
@@ -26,7 +25,8 @@ class HousingFeatures(BaseModel):
     Longitude: float
 
 
-model = joblib.load("models/housing_model.joblib")
+# model = joblib.load("models/housing_model.joblib")
+model = bentoml.sklearn.load_model("housing_model")
 
 # prometheus metrics
 REQUEST_LATENCY = Histogram("request_latency_seconds", "Request Latency in Seconds")
@@ -45,7 +45,7 @@ class HousingPredictor:
 
         try:
             input_array = np.array(list(input_data.dict().values())).reshape(1, -1)
-            prediction = model.predict(input_array)
+            prediction = model.predict.run(input_array)
 
             return {"prediction": prediction.tolist()}
         except Exception as e:
