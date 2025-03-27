@@ -1,8 +1,15 @@
 # California Housing Price Prediction API
 
 A dockerized REST API for predicting California housing prices using Random Forest Regressor.<br>
-Scikit-learn and Optuna are used for training and hyperparameter tuning, the endpoints are served using BentoML, and metrics are logged with Prometheus. <br>
-The service is accessible on port 3000.
+Tech:
+- Scikit-Learn (RandomForestRegressor)
+- Optuna for hyperparameter tuning
+- BentoML to serve the API endpoints
+- BentoML for model registry
+- Prometheus for logging metrics and request latency
+- Grafana for visualization through custom dashboards
+- Dockerized BentoML, Prometheus and Grafana services
+- CI/CD with GitHub Actions
 
 ## Project Structure
 
