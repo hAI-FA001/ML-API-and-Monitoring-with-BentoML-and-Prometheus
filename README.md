@@ -1,7 +1,9 @@
 # California Housing Price Prediction API
 
-A dockerized REST API for predicting California housing prices using Random Forest Regressor.<br>
+An ML REST API containerized with Docker, monitored with Prometheus and Grafana, secured with API key authentication and managed with BentoML's Model Registry.
+
 Tech:
+
 - Scikit-Learn (RandomForestRegressor)
 - Optuna for hyperparameter tuning
 - BentoML to serve the API endpoints
@@ -22,6 +24,7 @@ california-housing-api/
 ├── src/
 │   └── california_housing_api/
 │       ├── __init__.py
+│       ├── api_config.py
 │       ├── data_loading.py
 │       ├── model_training.py
 │       ├── service.py
@@ -34,6 +37,8 @@ california-housing-api/
 ├── poetry.lock
 ├── README.md
 ├── Dockerfile
+├── docker-compose.yml
+├── prometheus.yml
 └── .gitignore
 </pre>
 
@@ -49,28 +54,13 @@ california-housing-api/
   poetry run python src/california_housing_api/model_training.py
   ```
 
-  - Trains and saves a `RandomForestRegressor` in `models/housing_model.joblib`
-  - Hyperparameters are tuned with Optuna
+  - Trains and saves a `RandomForestRegressor` in BentoML's model registry and under `models/` directory.
 
-- Run BentoML service
+- Run the services
 
   ```bash
-  bentoml serve src/california_housing_api/service.py:HousingPredictor
+  docker-compose up --build
   ```
-
-### Docker
-
-- Build the image
-
-```bash
-docker build -t california-housing-api .
-```
-
-- Run the container
-
-```bash
-docker run -p 3000:3000 california-housing-api
-```
 
 ## Usage
 
@@ -79,3 +69,5 @@ Endpoints:
 - `POST /predict`: Expects a JSON payload with housing features
 - `POST /health`: Check if it's running
 - `GET /metrics`: Shows Prometheus metrics
+
+Each endpoint expects an API key, which you can get by inspecting `api_keys.txt`
