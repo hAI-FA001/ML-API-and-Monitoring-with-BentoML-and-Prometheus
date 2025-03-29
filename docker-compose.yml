@@ -26,6 +26,10 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3001:3000"
+    volumes:
+      - type: bind
+        source: ./api_keys.txt
+        target: /app/api_keys.txt
 
 volumes:
   grafana_data:
